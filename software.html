@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SE & System Analysis | Mid-Term Study Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #fafafa;
+        color: #333;
+      }
+
+      /* Required Chart Container Styling */
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 350px;
+        max-height: 400px;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+
+      .tab-btn.active {
+        border-left: 4px solid #3b82f6;
+        background-color: #eff6ff;
+        color: #1e3a8a;
+        font-weight: 600;
+      }
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.4s ease-in-out;
+      }
+      .tab-content.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .dotted-diagram {
+        font-family: monospace;
+        white-space: pre;
+        background: #1e293b;
+        color: #10b981;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        line-height: 1.2;
+      }
+    </style>
+  </head>
+  <body class="flex h-screen overflow-hidden">
+    <!-- Chosen Palette: Warm Neutrals & Slate (bg-stone-50, slate-800, blue-600 accents) -->
+    <!-- Application Structure Plan: A dashboard-style layout with a fixed sidebar for navigation and a main content area. This allows students to quickly jump between the 4 main 'Slides' (topics) without losing context. Information is chunked into cards, accordions, and tables to maximize readability and adhere to the 'less word more explanation' instruction. -->
+    <!-- Visualization & Content Choices: 
+         1. Fundamentals: Grid cards for quick Q&A. Goal: Inform. 
+         2. SDLC: Interactive vertical stepper timeline. Goal: Process visualization without SVG. 
+         3. Models: Tabbed interface + dotted text diagrams + comparison table. Goal: Compare frameworks. 
+         4. SPM: Chart.js Radar chart for Iron Triangle + styled data tables for Risk Management. Goal: Data relationships and organization. 
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Sidebar Navigation -->
+    <nav
+      class="w-64 bg-slate-50 border-r border-slate-200 flex flex-col h-full shadow-sm z-10 flex-shrink-0"
+    >
+      <h1>
+        Made by
+        <a
+          href="https://www.linkedin.com/in/rahanur19"
+          target="_blank"
+          class="text-blue-500 hover:text-blue-700"
+          >Rahanur Rahman</a
+        >
+      </h1>
+      <div class="p-6 border-b border-slate-200 bg-white">
+        <h1
+          class="text-xl font-bold text-slate-800 leading-tight border-b-2 border-blue-500 pb-2 inline-block"
+        >
+          🚀 SE Mid-Term Prep
+        </h1>
+        <p class="text-xs text-slate-500 mt-2">
+          Software Eng. & System Analysis
+        </p>
+      </div>
+      <div class="flex-1 overflow-y-auto py-4">
+        <ul class="space-y-1">
+          <li>
+            <button
+              onclick="switchTab('slide1')"
+              id="btn-slide1"
+              class="tab-btn active w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-100 transition-colors"
+            >
+              1. 📚 Fundamentals
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="switchTab('slide2')"
+              id="btn-slide2"
+              class="tab-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-100 transition-colors"
+            >
+              2. ⚙️ SDLC Basics
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="switchTab('slide3')"
+              id="btn-slide3"
+              class="tab-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-100 transition-colors"
+            >
+              3. 🔄 SDLC Models
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="switchTab('slide4')"
+              id="btn-slide4"
+              class="tab-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-100 transition-colors"
+            >
+              4. 📊 Project Mgmt (SPM)
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="p-4 border-t border-slate-200 text-xs text-slate-400 text-center"
+      >
+        Interactive Study Guide
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 bg-stone-50 overflow-y-auto p-4 md:p-8 lg:p-12">
+      <!-- ================= SLIDE 1: FUNDAMENTALS ================= -->
+      <section id="slide1" class="tab-content active max-w-6xl mx-auto">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-slate-800 mb-2">
+            📚 Software Engineering Fundamentals
+          </h2>
+          <p class="text-slate-600">
+            Core concepts, definitions, and characteristics of software.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Q1-Q5 -->
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <h3 class="text-lg font-bold text-blue-700 border-b pb-2 mb-4">
+              Definitions & Roles
+            </h3>
+            <ul class="space-y-4 text-sm">
+              <li>
+                <strong class="text-slate-800">1. What is Software?</strong
+                ><br />
+                Computer programs, data structures, and documentation that allow
+                computers to perform tasks.
+              </li>
+              <li>
+                <strong class="text-slate-800">2. Dual Role of Software:</strong
+                ><br />
+                ▪️ <b>As a Product:</b> Delivers computing potential
+                (functionality) to users.<br />
+                ▪️ <b>As a Vehicle:</b> Acts as the foundation/engine to deliver
+                other products (e.g., OS, networks).
+              </li>
+              <li>
+                <strong class="text-slate-800">3. Role of a SE:</strong><br />
+                To apply systematic, disciplined, quantifiable approaches to the
+                development, operation, and maintenance of software.
+              </li>
+              <li>
+                <strong class="text-slate-800">4. Key Objectives:</strong><br />
+                High quality, on time, within budget, maintainable, meets user
+                needs.
+              </li>
+              <li>
+                <strong class="text-slate-800">5. Sys Eng vs. Soft Eng:</strong
+                ><br />
+                <span class="text-indigo-600 font-semibold">System Eng:</span>
+                Broad. Covers ALL aspects (Hardware, Software, People,
+                Processes).<br />
+                <span class="text-blue-600 font-semibold">Software Eng:</span>
+                Specific. Focuses <i>only</i> on building the software
+                components.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Q6-Q11 -->
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <h3 class="text-lg font-bold text-blue-700 border-b pb-2 mb-4">
+              Characteristics of Software
+            </h3>
+            <ul class="space-y-4 text-sm">
+              <li>
+                <strong class="text-slate-800">6. Key Characteristics:</strong>
+                Developed/engineered, doesn't wear out, custom-built.
+              </li>
+              <li class="bg-blue-50 p-3 rounded">
+                <strong class="text-blue-800"
+                  >7. Engineered, not manufactured:</strong
+                ><br />
+                Software is a logical entity. Costs lie in design & engineering,
+                not in stamping out mass physical copies. Quality is built in
+                during design.
+              </li>
+              <li class="bg-blue-50 p-3 rounded">
+                <strong class="text-blue-800">8. Doesn't "wear out":</strong
+                ><br />
+                Unlike hardware (which breaks via friction/heat - "bathtub
+                curve"), software is immune to physical degradation. The failure
+                rate ideally drops to a flat line.
+              </li>
+              <li>
+                <strong class="text-slate-800"
+                  >9/10. Entropy & "Wearing Out":</strong
+                ><br />
+                <b>Bit Rot / Entropy:</b> Software deteriorates logically. As
+                changes/patches are made over time, complexity increases,
+                architecture degrades, and bugs multiply. Environmental changes
+                (new OS) also cause failures.
+              </li>
+              <li>
+                <strong class="text-slate-800">11. Custom Built:</strong><br />
+                Despite trends in reusing components (libraries/APIs), core
+                business logic usually requires custom tailoring to specific
+                client needs.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Q12-Q17 -->
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 md:col-span-2"
+          >
+            <h3 class="text-lg font-bold text-blue-700 border-b pb-2 mb-4">
+              Evolution, Types & Ethics
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+              <div>
+                <strong class="text-slate-800">12. Good SW Attributes:</strong>
+                <ul class="list-disc pl-5 mt-1 text-slate-600">
+                  <li><b>Maintainability:</b> Can evolve, easy to update.</li>
+                  <li><b>Dependability:</b> Secure, reliable, safe.</li>
+                  <li><b>Efficiency:</b> Doesn't waste memory/CPU.</li>
+                  <li>
+                    <b>Acceptability:</b> Understandable, usable by target
+                    audience.
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <strong class="text-slate-800"
+                  >13/14. Software Crisis & Evolution:</strong
+                >
+                <p class="mt-1">
+                  <b>Crisis:</b> Difficulty writing defect-free, on-time
+                  software.<br />
+                  <b>Causes:</b> Rising complexity, poor management, changing
+                  reqs, lack of training.<br />
+                  <b>Evolution:</b> The continuous process of software adapting
+                  to environment changes.
+                </p>
+              </div>
+              <div>
+                <strong class="text-slate-800"
+                  >15/16. Types of Software:</strong
+                >
+                <p class="mt-1 text-xs">
+                  <b>System:</b> OS, Compilers.<br />
+                  <b>Real-Time:</b> Weather monitors, Air-traffic.<br />
+                  <b>Application:</b> (Word, Games).<br />
+                  <i>App subtypes:</i> Web, Mobile, Embedded, AI, Data.
+                </p>
+
+                <strong class="text-slate-800 mt-2 block">17. Ethics:</strong>
+                <p class="text-xs">
+                  Act in public interest, client best interest, maintain
+                  independence/integrity, fair to colleagues.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 2: SDLC ================= -->
+      <section id="slide2" class="tab-content max-w-5xl mx-auto">
+        <div class="mb-8 text-center">
+          <h2 class="text-3xl font-bold text-slate-800 mb-2">
+            ⚙️ Software Development Life Cycle (SDLC)
+          </h2>
+          <p class="text-slate-600">
+            Standardized process to design, develop, and test high-quality
+            software.
+          </p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-8">
+          <!-- Interactive Timeline -->
+          <div
+            class="w-full md:w-1/3 bg-white p-4 rounded-xl shadow border border-slate-200"
+          >
+            <h3 class="font-bold text-center text-slate-700 mb-4 border-b pb-2">
+              Click Steps
+            </h3>
+            <div
+              class="flex flex-col space-y-2 relative"
+              id="sdlc-steps-container"
+            >
+              <!-- Connecting Line -->
+              <div
+                class="absolute left-6 top-4 bottom-4 w-1 bg-slate-200 z-0"
+              ></div>
+
+              <!-- Buttons injected via JS -->
+            </div>
+          </div>
+
+          <!-- Detail Panel -->
+          <div
+            class="w-full md:w-2/3 bg-white p-8 rounded-xl shadow border border-t-4 border-t-blue-500 border-slate-200 flex flex-col justify-center min-h-[400px]"
+            id="sdlc-detail-panel"
+          >
+            <div class="text-center text-slate-400">
+              <span class="text-4xl">👈</span><br />
+              <p class="mt-4 text-lg">
+                Select a phase from the timeline to view details.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 3: SDLC METHODS ================= -->
+      <section id="slide3" class="tab-content max-w-6xl mx-auto">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-slate-800 mb-2">🔄 SDLC Models</h2>
+          <p class="text-slate-600">
+            Frameworks governing the flow of the SDLC steps.
+          </p>
+        </div>
+
+        <!-- Model Tabs -->
+        <div
+          class="flex space-x-2 border-b border-slate-300 mb-6 overflow-x-auto pb-2"
+        >
+          <button
+            onclick="showModel('waterfall')"
+            id="mbtn-waterfall"
+            class="px-4 py-2 font-semibold rounded-t bg-blue-600 text-white"
+          >
+            Waterfall
+          </button>
+          <button
+            onclick="showModel('iterative')"
+            id="mbtn-iterative"
+            class="px-4 py-2 font-semibold text-slate-600 hover:bg-slate-200 rounded-t"
+          >
+            Iterative
+          </button>
+          <button
+            onclick="showModel('agile')"
+            id="mbtn-agile"
+            class="px-4 py-2 font-semibold text-slate-600 hover:bg-slate-200 rounded-t"
+          >
+            Agile
+          </button>
+          <button
+            onclick="showModel('spiral')"
+            id="mbtn-spiral"
+            class="px-4 py-2 font-semibold text-slate-600 hover:bg-slate-200 rounded-t"
+          >
+            Spiral (4th)
+          </button>
+        </div>
+
+        <!-- Model Content Area -->
+        <div
+          id="model-content-area"
+          class="bg-white p-6 rounded-b-xl rounded-tr-xl shadow border border-slate-200 mb-8 min-h-[350px]"
+        >
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Comparison Table -->
+        <h3 class="text-xl font-bold text-slate-800 mb-4 mt-12">
+          ⚖️ Comparison of 4 Models
+        </h3>
+        <div
+          class="overflow-x-auto bg-white rounded-xl shadow border border-slate-200"
+        >
+          <table class="w-full text-sm text-left text-slate-600">
+            <thead
+              class="text-xs text-slate-700 uppercase bg-slate-100 border-b"
+            >
+              <tr>
+                <th class="px-4 py-3">Feature</th>
+                <th class="px-4 py-3 border-l">Waterfall</th>
+                <th class="px-4 py-3 border-l">Iterative</th>
+                <th class="px-4 py-3 border-l">Agile</th>
+                <th class="px-4 py-3 border-l">Spiral</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="px-4 py-3 font-bold bg-slate-50">Structure</td>
+                <td class="px-4 py-3 border-l">Linear, Sequential</td>
+                <td class="px-4 py-3 border-l">Cyclic, Incremental</td>
+                <td class="px-4 py-3 border-l">Sprints, Collaborative</td>
+                <td class="px-4 py-3 border-l">Loops, Risk-focused</td>
+              </tr>
+              <tr class="border-b">
+                <td class="px-4 py-3 font-bold bg-slate-50">Requirements</td>
+                <td class="px-4 py-3 border-l">Fixed at start</td>
+                <td class="px-4 py-3 border-l">Can evolve per cycle</td>
+                <td class="px-4 py-3 border-l">Highly flexible</td>
+                <td class="px-4 py-3 border-l">Refined per loop</td>
+              </tr>
+              <tr class="border-b">
+                <td class="px-4 py-3 font-bold bg-slate-50">Risk Mgmt</td>
+                <td class="px-4 py-3 border-l">Very Low</td>
+                <td class="px-4 py-3 border-l">Medium</td>
+                <td class="px-4 py-3 border-l">Medium-High</td>
+                <td class="px-4 py-3 border-l">Very High</td>
+              </tr>
+              <tr class="border-b">
+                <td class="px-4 py-3 font-bold bg-slate-50">Delivery Time</td>
+                <td class="px-4 py-3 border-l">Late (End of project)</td>
+                <td class="px-4 py-3 border-l">Partial early delivery</td>
+                <td class="px-4 py-3 border-l">Continuous, Fast</td>
+                <td class="px-4 py-3 border-l">Late (Iterative prototypes)</td>
+              </tr>
+              <tr class="border-b">
+                <td class="px-4 py-3 font-bold bg-slate-50">Ideal Project</td>
+                <td class="px-4 py-3 border-l">Small, Clear needs</td>
+                <td class="px-4 py-3 border-l">Large, modular apps</td>
+                <td class="px-4 py-3 border-l">Startups, web apps</td>
+                <td class="px-4 py-3 border-l">Complex, high-risk systems</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-bold bg-slate-50">Cost of Change</td>
+                <td class="px-4 py-3 border-l text-red-500 font-bold">
+                  Very High
+                </td>
+                <td class="px-4 py-3 border-l text-yellow-600 font-bold">
+                  Medium
+                </td>
+                <td class="px-4 py-3 border-l text-green-500 font-bold">Low</td>
+                <td class="px-4 py-3 border-l text-yellow-600 font-bold">
+                  Medium
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 4: SPM & RISK ================= -->
+      <section id="slide4" class="tab-content max-w-6xl mx-auto">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-slate-800 mb-2">
+            📊 Software Project Management (SPM)
+          </h2>
+          <p class="text-slate-600">
+            Planning, scheduling, resource allocation, and risk management.
+          </p>
+        </div>
+
+        <!-- Top Grid: Basics & Chart -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <!-- SPM Basics -->
+          <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+            <h3 class="text-lg font-bold text-blue-700 border-b pb-2 mb-4">
+              SPM Fundamentals
+            </h3>
+            <ul class="space-y-4 text-sm">
+              <li>
+                <strong class="text-slate-800">1. What is SPM?</strong><br />
+                The art and science of planning and leading software projects to
+                successful completion.
+              </li>
+              <li>
+                <strong class="text-slate-800">2. Need of SPM:</strong><br />
+                Necessary to control cost, adhere to schedules, manage quality,
+                and handle project complexity.
+              </li>
+              <li>
+                <strong class="text-slate-800">4. PM Responsibilities:</strong>
+                <ul class="list-disc pl-5 mt-1 text-slate-600">
+                  <li><b>Planning:</b> Defining scope, timeline, budget.</li>
+                  <li><b>Staffing:</b> Assembling & leading the team.</li>
+                  <li><b>Monitoring:</b> Tracking progress vs plan.</li>
+                </ul>
+              </li>
+              <li>
+                <strong class="text-slate-800">5. Key Activities:</strong><br />
+                Project Estimation (Size/Cost), Scheduling (Gantt charts), Risk
+                Management, Configuration Management.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Iron Triangle Chart -->
+          <div
+            class="bg-white p-6 rounded-xl shadow border border-slate-200 text-center"
+          >
+            <h3 class="text-lg font-bold text-blue-700 border-b pb-2 mb-2">
+              3. The Iron Triangle
+            </h3>
+            <p class="text-xs text-slate-500 mb-2">
+              Changing one constraint affects the others (Quality is
+              centralized).
+            </p>
+            <div class="chart-container">
+              <canvas id="ironTriangleChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Management Tables -->
+        <h3
+          class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-amber-500 pl-3"
+        >
+          ⚠️ Risk Management Details
+        </h3>
+        <p class="text-sm text-slate-600 mb-6">
+          <b>RM:</b> The process of identifying, analyzing, and mitigating
+          threats to a project's success. Essential to prevent failure.
+        </p>
+
+        <div class="space-y-8">
+          <!-- T1 & T2 Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Table 1 -->
+            <div
+              class="bg-white rounded-xl shadow border border-slate-200 overflow-hidden"
+            >
+              <div
+                class="bg-slate-100 px-4 py-2 border-b font-bold text-slate-700"
+              >
+                T1: Risk Types & Definitions
+              </div>
+              <table class="w-full text-xs text-left">
+                <thead class="uppercase bg-slate-50 border-b text-slate-500">
+                  <tr>
+                    <th class="px-3 py-2">Name</th>
+                    <th class="px-3 py-2">Type</th>
+                    <th class="px-3 py-2">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold">Tech Stack</td>
+                    <td class="px-3 py-2 text-blue-600">Technical</td>
+                    <td class="px-3 py-2">Using untested/new technologies.</td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold">Budget Cuts</td>
+                    <td class="px-3 py-2 text-green-600">Business</td>
+                    <td class="px-3 py-2">Loss of funding mid-project.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-3 py-2 font-bold">Turnover</td>
+                    <td class="px-3 py-2 text-red-600">Project</td>
+                    <td class="px-3 py-2">Key team members leaving.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table 2 -->
+            <div
+              class="bg-white rounded-xl shadow border border-slate-200 overflow-hidden"
+            >
+              <div
+                class="bg-slate-100 px-4 py-2 border-b font-bold text-slate-700"
+              >
+                T2: 4 Stages of Risk Mgmt
+              </div>
+              <table class="w-full text-xs text-left">
+                <thead class="uppercase bg-slate-50 border-b text-slate-500">
+                  <tr>
+                    <th class="px-3 py-2 w-8">#</th>
+                    <th class="px-3 py-2">Stage</th>
+                    <th class="px-3 py-2">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold">1</td>
+                    <td class="px-3 py-2 font-bold text-slate-800">Identify</td>
+                    <td class="px-3 py-2">
+                      Brainstorm potential risks (What can go wrong?).
+                    </td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold">2</td>
+                    <td class="px-3 py-2 font-bold text-slate-800">Analyze</td>
+                    <td class="px-3 py-2">
+                      Assess probability and impact severity.
+                    </td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold">3</td>
+                    <td class="px-3 py-2 font-bold text-slate-800">Plan</td>
+                    <td class="px-3 py-2">
+                      Develop mitigation strategies (How to prevent?).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-3 py-2 font-bold">4</td>
+                    <td class="px-3 py-2 font-bold text-slate-800">Monitor</td>
+                    <td class="px-3 py-2">
+                      Continuously track indicators during project.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- T3 & T4 Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Table 3 -->
+            <div
+              class="bg-white rounded-xl shadow border border-slate-200 overflow-hidden"
+            >
+              <div
+                class="bg-slate-100 px-4 py-2 border-b font-bold text-slate-700"
+              >
+                T3: Modern Common Risks
+              </div>
+              <table class="w-full text-xs text-left">
+                <thead class="uppercase bg-slate-50 border-b text-slate-500">
+                  <tr>
+                    <th class="px-3 py-2">Risk Factor</th>
+                    <th class="px-3 py-2">Modern Context</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold">Scope Creep</td>
+                    <td class="px-3 py-2">
+                      Constant feature additions requested by clients.
+                    </td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold">Tech Debt</td>
+                    <td class="px-3 py-2">
+                      Rushing code to meet Agile sprints causing bugs later.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-3 py-2 font-bold">Cyber Threat</td>
+                    <td class="px-3 py-2">
+                      Vulnerabilities in 3rd party open-source libraries.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table 4 -->
+            <div
+              class="bg-white rounded-xl shadow border border-slate-200 overflow-hidden"
+            >
+              <div
+                class="bg-slate-100 px-4 py-2 border-b font-bold text-slate-700"
+              >
+                T4: Risk Response Strategies
+              </div>
+              <table class="w-full text-xs text-left">
+                <thead class="uppercase bg-slate-50 border-b text-slate-500">
+                  <tr>
+                    <th class="px-3 py-2">Strategy</th>
+                    <th class="px-3 py-2">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold text-green-600">Avoid</td>
+                    <td class="px-3 py-2">
+                      Change plan to eliminate risk (e.g., don't use new tech).
+                    </td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold text-blue-600">Mitigate</td>
+                    <td class="px-3 py-2">
+                      Reduce probability/impact (e.g., train staff).
+                    </td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-3 py-2 font-bold text-amber-600">Transfer</td>
+                    <td class="px-3 py-2">
+                      Shift burden to 3rd party (e.g., buy insurance,
+                      outsource).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-3 py-2 font-bold text-slate-600">Accept</td>
+                    <td class="px-3 py-2">
+                      Acknowledge risk and budget for it (contingency fund).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Table 5 -->
+          <div
+            class="bg-white rounded-xl shadow border border-slate-200 overflow-hidden w-full md:w-2/3 mx-auto"
+          >
+            <div
+              class="bg-slate-100 px-4 py-2 border-b font-bold text-slate-700"
+            >
+              T5: Risk Types & Potential Indicators
+            </div>
+            <table class="w-full text-xs text-left">
+              <thead class="uppercase bg-slate-50 border-b text-slate-500">
+                <tr>
+                  <th class="px-3 py-2">Risk Type</th>
+                  <th class="px-3 py-2">Early Warning Indicator (Metric)</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-600">
+                <tr class="border-b">
+                  <td class="px-3 py-2 font-bold">Schedule Risk</td>
+                  <td class="px-3 py-2">
+                    Missed milestones, low sprint velocity.
+                  </td>
+                </tr>
+                <tr class="border-b">
+                  <td class="px-3 py-2 font-bold">Quality Risk</td>
+                  <td class="px-3 py-2">
+                    High defect density in testing, failed builds.
+                  </td>
+                </tr>
+                <tr class="border-b">
+                  <td class="px-3 py-2 font-bold">Personnel Risk</td>
+                  <td class="px-3 py-2">
+                    High absenteeism, missed daily standups.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="h-12"></div>
+        <!-- Spacer -->
+      </section>
+    </main>
+
+    <!-- Interactive Logic -->
+    <script>
+      // --- 1. Navigation Logic ---
+      function switchTab(tabId) {
+        // Hide all
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".tab-btn").forEach((el) => {
+          el.classList.remove(
+            "active",
+            "border-l-4",
+            "border-blue-500",
+            "bg-blue-50",
+            "text-blue-800",
+            "font-semibold",
+          );
+          el.classList.add("text-slate-600");
+        });
+
+        // Show target
+        document.getElementById(tabId).classList.add("active");
+
+        // Style active button
+        const btn = document.getElementById("btn-" + tabId);
+        btn.classList.add(
+          "active",
+          "border-l-4",
+          "border-blue-500",
+          "bg-blue-50",
+          "text-blue-800",
+          "font-semibold",
+        );
+        btn.classList.remove("text-slate-600");
+
+        // Render chart if Slide 4
+        if (tabId === "slide4" && !window.chartRendered) {
+          renderIronTriangle();
+          window.chartRendered = true;
+        }
+      }
+
+      // --- 2. SDLC Interactive Timeline Data ---
+      const sdlcSteps = [
+        {
+          id: 1,
+          name: "1. Requirement Analysis",
+          emoji: "📝",
+          short: "Gather needs",
+          details:
+            "<b>What happens:</b> Stakeholders discuss what the software must do. Reqs are documented (SRS).<br><br><b>Importance:</b><br>▪️ Prevents building the wrong product.<br>▪️ Sets clear baseline for cost/time estimation.",
+        },
+        {
+          id: 2,
+          name: "2. Feasibility Study",
+          emoji: "⚖️",
+          short: "Can we do it?",
+          details:
+            "<b>What happens:</b> Analyze technical, economic, and operational viability.<br><br><b>Importance:</b><br>▪️ Identifies 'deal-breakers' early.<br>▪️ Saves money by killing impossible projects.",
+        },
+        {
+          id: 3,
+          name: "3. System Analysis",
+          emoji: "🔍",
+          short: "Deconstruct system",
+          details:
+            "<b>What happens:</b> Breaking down requirements into logical models and component specifications.<br><br><b>Importance:</b><br>▪️ Bridges gap between business needs and tech design.<br>▪️ Defines data flow and architecture limits.",
+        },
+        {
+          id: 4,
+          name: "4. Design",
+          emoji: "📐",
+          short: "How to build",
+          details:
+            "<b>What happens:</b> Creating architecture, UI/UX, database schema (High-level & Low-level design).<br><br><b>Importance:</b><br>▪️ Acts as the blueprint for coders.<br>▪️ Crucial for performance and security planning.",
+        },
+        {
+          id: 5,
+          name: "5. Implementation",
+          emoji: "💻",
+          short: "Coding phase",
+          details:
+            "<b>What happens:</b> Developers write code following the design specs.<br><br><b>Importance:</b><br>▪️ Transforms ideas into executable software.<br>▪️ Longest phase; requires strict standard adherence.",
+        },
+        {
+          id: 6,
+          name: "6. Testing",
+          emoji: "🐛",
+          short: "Find bugs",
+          details:
+            "<b>What happens:</b> QA checks software against requirements (Unit, Integration, System testing).<br><br><b>Importance:</b><br>▪️ Ensures quality and dependability.<br>▪️ Cheaper to fix bugs here than in production.",
+        },
+        {
+          id: 7,
+          name: "7. Deployment",
+          emoji: "🚀",
+          short: "Release to users",
+          details:
+            "<b>What happens:</b> Software is pushed to live servers/app stores for user access.<br><br><b>Importance:</b><br>▪️ Product finally generates value.<br>▪️ Tests real-world environmental compatibility.",
+        },
+        {
+          id: 8,
+          name: "8. Maintenance",
+          emoji: "🔧",
+          short: "Updates & fixes",
+          details:
+            "<b>What happens:</b> Patching bugs, adding new features, updating for new OS.<br><br><b>Importance:</b><br>▪️ Combats 'Software Entropy' (Bit Rot).<br>▪️ Keeps software relevant to changing business needs.",
+        },
+      ];
+
+      const stepsContainer = document.getElementById("sdlc-steps-container");
+      const detailPanel = document.getElementById("sdlc-detail-panel");
+
+      sdlcSteps.forEach((step, index) => {
+        const btn = document.createElement("button");
+        btn.className =
+          "relative z-10 flex items-center p-3 w-full text-left bg-white border-2 border-slate-200 rounded-lg hover:border-blue-400 hover:shadow-md transition-all group";
+        btn.onclick = () => showSdlcDetail(step, btn);
+        btn.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center mr-3 border-2 border-white shadow-sm group-hover:bg-blue-100">${step.emoji}</div>
+                <div>
+                    <div class="font-bold text-slate-800 text-sm">${step.name}</div>
+                    <div class="text-xs text-slate-500">${step.short}</div>
+                </div>
+            `;
+        stepsContainer.appendChild(btn);
+      });
+
+      function showSdlcDetail(step, btnElement) {
+        // reset buttons
+        Array.from(stepsContainer.children).forEach((c) => {
+          if (c.tagName === "BUTTON") {
+            c.classList.remove("border-blue-500", "bg-blue-50");
+            c.classList.add("border-slate-200", "bg-white");
+          }
+        });
+        // active button
+        btnElement.classList.add("border-blue-500", "bg-blue-50");
+        btnElement.classList.remove("border-slate-200", "bg-white");
+
+        // update panel
+        detailPanel.innerHTML = `
+                <div class="text-5xl mb-4">${step.emoji}</div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">${step.name}</h3>
+                <p class="text-sm text-blue-600 font-semibold mb-6 border-b pb-2 uppercase tracking-wide">${step.short}</p>
+                <div class="text-slate-700 leading-relaxed text-sm">
+                    ${step.details}
+                </div>
+            `;
+      }
+
+      // --- 3. SDLC Models Data ---
+      const modelsData = {
+        waterfall: {
+          desc: "A linear, sequential approach where each phase must be completed before the next begins.",
+          when: [
+            "Requirements are perfectly clear/fixed",
+            "Technology is well understood",
+            "Short, simple projects",
+          ],
+          workflow: [
+            "Requirements defined ->",
+            "System Design ->",
+            "Implementation ->",
+            "Testing ->",
+            "Deployment ->",
+            "Maintenance (No going back)",
+          ],
+          diagram: `
+[Reqs]
+   └──> [Design]
+           └──> [Code]
+                  └──> [Test]
+                         └──> [Deploy]`,
+          adv: ["Simple to manage", "Clear milestones", "Easy documentation"],
+          dis: [
+            "Inflexible to changes",
+            "Late testing phase",
+            "High risk if reqs are wrong",
+          ],
+        },
+        iterative: {
+          desc: "Develops system through repeated cycles (iterations) and in smaller portions at a time.",
+          when: [
+            "Large projects",
+            "Major requirements known, details can evolve",
+            "Need for early partial release",
+          ],
+          workflow: [
+            "Initial Planning ->",
+            "Iterative cycle (Design -> Code -> Test) ->",
+            "Review & Update ->",
+            "Next iteration ->",
+            "Final Release",
+          ],
+          diagram: `
+Cycle 1: [Req]->[Design]->[Code]->[Test] => Version 1
+Cycle 2:  +   ->[Design]->[Code]->[Test] => Version 2
+Cycle 3:  +   ->[Design]->[Code]->[Test] => Final`,
+          adv: [
+            "Early working product",
+            "Easier to test smaller units",
+            "Adapts to some changes",
+          ],
+          dis: [
+            "Requires heavy management",
+            "Architecture can degrade",
+            "Not good for small projects",
+          ],
+        },
+        agile: {
+          desc: "Continuous iteration of development and testing via highly collaborative cross-functional teams.",
+          when: [
+            "Rapidly changing requirements",
+            "Startups / Innovative tech",
+            "High user involvement expected",
+          ],
+          workflow: [
+            "Product Backlog ->",
+            "Sprint Planning ->",
+            "Sprint (1-4 weeks coding) ->",
+            "Daily Standups ->",
+            "Sprint Review ->",
+            "Release Increment",
+          ],
+          diagram: `
+(Backlog) => [ Sprint 1 ] ↻ => [Increment]
+             [ Sprint 2 ] ↻ => [Increment]
+             [ Sprint 3 ] ↻ => [Increment]
+   * Highly collaborative loops *`,
+          adv: [
+            "Highly adaptable",
+            "Customer satisfaction (fast delivery)",
+            "Continuous improvement",
+          ],
+          dis: [
+            "Poor documentation",
+            "Scope creep easily happens",
+            "Needs highly skilled team",
+          ],
+        },
+        spiral: {
+          desc: "Combines iterative nature with systematic aspects of waterfall, heavily focusing on Risk Assessment.",
+          when: [
+            "High-risk, complex projects",
+            "Mission-critical systems",
+            "Budget allows for heavy risk analysis",
+          ],
+          workflow: [
+            "Determine Objectives ->",
+            "Identify & Resolve Risks (Prototypes) ->",
+            "Develop & Test ->",
+            "Plan next iteration ->",
+            "Loop",
+          ],
+          diagram: `
+      Plan   |   Risk Analysis
+    ---------+---------  (Loop spirals outward)
+      Assess |   Engineering
+             v
+       (Prototypes built at every loop)`,
+          adv: [
+            "Excellent risk avoidance",
+            "Strong control for large projects",
+            "Software produced early",
+          ],
+          dis: [
+            "Very expensive",
+            "Complex to manage",
+            "Risk analysis requires high expertise",
+          ],
+        },
+      };
+
+      function showModel(modelId) {
+        // Style tabs
+        document.querySelectorAll("#slide3 button").forEach((b) => {
+          b.classList.remove("bg-blue-600", "text-white");
+          b.classList.add("text-slate-600", "hover:bg-slate-200");
+        });
+        const activeBtn = document.getElementById("mbtn-" + modelId);
+        activeBtn.classList.add("bg-blue-600", "text-white");
+        activeBtn.classList.remove("text-slate-600", "hover:bg-slate-200");
+
+        const data = modelsData[modelId];
+        const content = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-xl font-bold text-slate-800 capitalize mb-2">${modelId} Model</h4>
+                        <p class="text-sm text-slate-600 italic border-l-4 border-slate-300 pl-3 mb-4">${data.desc}</p>
+                        
+                        <h5 class="font-bold text-blue-700 text-sm mt-4">When to use:</h5>
+                        <ul class="list-disc pl-5 text-sm text-slate-700 mb-4">
+                            ${data.when.map((w) => `<li>${w}</li>`).join("")}
+                        </ul>
+
+                        <h5 class="font-bold text-blue-700 text-sm mt-4">Workflow:</h5>
+                        <ul class="list-decimal pl-5 text-sm text-slate-700 mb-4">
+                            ${data.workflow.map((w) => `<li>${w}</li>`).join("")}
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-bold text-blue-700 text-sm mb-2">Diagram (Concept)</h5>
+                        <div class="dotted-diagram text-xs sm:text-sm">${data.diagram}</div>
+
+                        <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+                            <div class="bg-green-50 p-3 rounded border border-green-200">
+                                <strong class="text-green-800 block mb-1">Advantages (+)</strong>
+                                <ul class="list-disc pl-4 text-green-700 text-xs">
+                                    ${data.adv.map((a) => `<li>${a}</li>`).join("")}
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-3 rounded border border-red-200">
+                                <strong class="text-red-800 block mb-1">Disadvantages (-)</strong>
+                                <ul class="list-disc pl-4 text-red-700 text-xs">
+                                    ${data.dis.map((d) => `<li>${d}</li>`).join("")}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        document.getElementById("model-content-area").innerHTML = content;
+      }
+
+      // Initialize first model
+      showModel("waterfall");
+
+      // --- 4. Chart.js Implementation for Iron Triangle ---
+      function renderIronTriangle() {
+        const ctx = document
+          .getElementById("ironTriangleChart")
+          .getContext("2d");
+        new Chart(ctx, {
+          type: "radar",
+          data: {
+            labels: ["Scope", "Time (Schedule)", "Cost (Budget)"],
+            datasets: [
+              {
+                label: "Project Constraint Balance",
+                data: [80, 80, 80],
+                backgroundColor: "rgba(59, 130, 246, 0.2)",
+                borderColor: "rgba(59, 130, 246, 1)",
+                pointBackgroundColor: "rgba(59, 130, 246, 1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(59, 130, 246, 1)",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              r: {
+                angleLines: { color: "rgba(0, 0, 0, 0.1)" },
+                grid: { color: "rgba(0, 0, 0, 0.1)" },
+                pointLabels: {
+                  font: { size: 14, weight: "bold", family: "Inter" },
+                  color: "#334155",
+                },
+                ticks: { display: false, min: 0, max: 100 },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function () {
+                    return "Increase in one reduces others (Quality in middle)";
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
